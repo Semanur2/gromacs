@@ -1,3 +1,71 @@
+GROMACS Simulation Workflow for Protein-Ligand Complex
+This repository provides a detailed workflow for performing molecular dynamics (MD) simulations using GROMACS, including the preparation of protein-ligand complexes and the steps required for running simulations. The workflow is inspired by GROMACS tutorials by Justin A. Lemkul, Ph.D. from Virginia Tech Department of Biochemistry.
+
+Workflow Overview
+The steps in this workflow guide the user through the process of preparing and running molecular dynamics simulations of protein-ligand complexes, starting from structure preparation to energy analysis.
+
+Steps:
+Protein Structure Preparation:
+
+Convert the protein structure from a PDB file to a GRO file using pdb2gmx.
+Process and fix ligand files using custom Perl and Python scripts.
+Prepare the complex for simulation by editing the protein-ligand structure using editconf.
+Box and Solvent Addition:
+
+Define the simulation box with a dodecahedron shape and 1.0 nm distance from the solute using editconf.
+Add water molecules to the simulation box using solvate.
+Ionization:
+
+Generate a topology file and prepare the system for ionization.
+Perform ionization using genion, ensuring the system is neutralized.
+Energy Minimization (EM):
+
+Perform energy minimization to relax the system using grompp and mdrun.
+Equilibration:
+
+Perform temperature (NVT) and pressure (NPT) equilibration using the appropriate .mdp files.
+Use grompp to prepare the systems and mdrun for simulation.
+Production Run:
+
+Run the production molecular dynamics simulation (md), then process the trajectory using trjconv to analyze the system’s behavior.
+Analysis:
+
+Perform various analyses including RMSD, distance calculations, and interaction energy evaluations using tools like rms, distance, and energy.
+Key Commands Used:
+gmx pdb2gmx: Converts PDB to GRO for GROMACS compatibility.
+perl sort_mol2_bonds.pl: Fixes the ligand structure.
+python cgenff_charmm2gmx.py: Prepares the ligand using the CHARMM force field.
+gmx solvate: Adds solvent molecules to the simulation box.
+gmx grompp: Prepares the system for energy minimization, equilibration, and production runs.
+gmx mdrun: Runs the simulation.
+gmx trjconv: Processes the trajectory for analysis.
+gmx rms, gmx distance, gmx energy: Perform analysis on the simulation data.
+File Descriptions:
+3HTB_clean.pdb: Cleaned protein structure.
+ligand.mol2: Ligand in MOL2 format.
+ligand_fix.mol2: Processed ligand structure.
+topol.top: Topology file for the system.
+em.mdp, nvt.mdp, npt.mdp: Parameter files for energy minimization, NVT, and NPT simulations.
+md.mdp: Parameter file for the production MD run.
+Prerequisites:
+GROMACS 2018 or later
+Python 3.x
+Perl
+CHARMM36 force field files
+Getting Started:
+Clone this repository to your local machine:
+
+
+git clone https://github.com/yourusername/repository-name.git
+Install the necessary dependencies:
+
+Ensure GROMACS is installed and set up correctly.
+Install Python and required libraries (e.g., MDAnalysis or any other Python dependencies you may need).
+Ensure Perl is installed for running the custom scripts.
+Follow the steps in the tutorial to prepare and run your simulation.
+
+Conclusion:
+This repository provides a systematic approach for simulating protein-ligand interactions using GROMACS, offering insights into molecular dynamics simulations and analysis. The workflow is modular, allowing you to adapt the steps for your specific system or research.
 Total Interaction Energy Calculation
 This script calculates the total interaction energy by combining the short-range Coulombic and Lennard-Jones energy components from the input .xvg file. To compute the total interaction energy, you need to sum the averages of both energy components and combine their uncertainties.
 
@@ -5,159 +73,6 @@ Given Values:
 Short-Range Coulombic Energy: −20.5 ± 7.4 kJ/mol
 Short-Range Lennard-Jones Energy: −99.1 ± 7.2 kJ/mol
 Calculation of Total Interaction Energy:
-The total interaction energy is calculated as follows:
-
-𝐸
-total
-=
-𝐸
-Coul
-+
-𝐸
-LJ
-E 
-total
-​
- =E 
-Coul
-​
- +E 
-LJ
-​
- 
-Here, 
-𝐸
-Coul
-E 
-Coul
-​
-  and 
-𝐸
-LJ
-E 
-LJ
-​
-  are the averages of the two energy components.
-
-The total uncertainty is calculated by combining the uncertainties of the individual components:
-
-𝜎
-total
-=
-𝜎
-Coul
-2
-+
-𝜎
-LJ
-2
-σ 
-total
-​
- = 
-σ 
-Coul
-2
-​
- +σ 
-LJ
-2
-​
- 
-​
- 
-Where 
-𝜎
-Coul
-σ 
-Coul
-​
-  and 
-𝜎
-LJ
-σ 
-LJ
-​
-  are the uncertainties of each energy component.
-
-Step-by-Step Calculation:
-Summing the Energies:
-𝐸
-total
-=
-(
-−
-20.5
-)
-+
-(
-−
-99.1
-)
-=
-−
-119.6
- 
-kJ/mol
-E 
-total
-​
- =(−20.5)+(−99.1)=−119.6kJ/mol
-Calculating the Uncertainty:
-𝜎
-total
-=
-(
-7.4
-)
-2
-+
-(
-7.2
-)
-2
-=
-54.76
-+
-51.84
-=
-106.6
-≈
-10.3
- 
-kJ/mol
-σ 
-total
-​
- = 
-(7.4) 
-2
- +(7.2) 
-2
- 
-​
- = 
-54.76+51.84
-​
- = 
-106.6
-​
- ≈10.3kJ/mol
-Result:
-Total interaction energy:
-
-𝐸
-total
-=
-−
-119.6
-±
-10.3
- 
-kJ/mol
-E 
-total
-​
  =−119.6±10.3kJ/mol
 This means that the total interaction energy is −119.6 kJ/mol with an uncertainty of ±10.3 kJ/mol.
 xvg.py
