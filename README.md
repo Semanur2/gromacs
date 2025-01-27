@@ -56,7 +56,7 @@ Getting Started:
 Clone this repository to your local machine:
 
 
-git clone https://github.com/yourusername/repository-name.git
+
 Install the necessary dependencies:
 
 Ensure GROMACS is installed and set up correctly.
