@@ -79,6 +79,8 @@ $ gmx rms -s em.tpr -f md_0_10_center.xtc -n index.ndx -tu ns -o rmsd_ligand.xvg
 $ gmx grompp -f ie.mdp -c npt.gro -t npt.cpt -p topol.top -n index.ndx -o ie.tpr
 $ gmx mdrun -deffnm ie -rerun md_0_10.xtc -nb cpu
 $ gmx energy -f ie.edr -o interaction_energy.xvg
+$ gmx hbond -s md_0_10.tpr -f md_0_10.xtc -n index.ndx -num hbonds.xvg
+
 ```
 
 ---
@@ -111,6 +113,8 @@ $ gmx energy -f ie.edr -o interaction_energy.xvg
 ### 7. Analysis:
 - Perform various analyses including RMSD, distance calculations, and interaction energy evaluations using tools like `rms`, `distance`, and `energy`.
 
+### 8. Hydrogen Bond Analysis
+-Calculate the hydrogen bonds formed during the simulation and output the results in the hbonds.xvg file, which contains the number of hydrogen bonds over time.
 ---
 
 ## Pressure Analysis
@@ -155,7 +159,7 @@ After obtaining the `interaction_energy.xvg` file from GROMACS, you can use the 
 
 ### Example Command:
 ```bash
-$ python xvg.py interaction_energy.xvg
+$ python xvg.py 
 ```
 
 The script outputs the interaction energy data in a format suitable for further analysis or plotting.
