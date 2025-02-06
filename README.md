@@ -81,9 +81,13 @@ $ gmx mdrun -deffnm ie -rerun md_0_10.xtc -nb cpu
 $ gmx energy -f ie.edr -o interaction_energy.xvg
 $ gmx hbond -s md_0_10.tpr -f md_0_10.xtc -n index.ndx -num hbonds.xvg
 
-```
+# Cluster analysis
+$ gmx_mpi cluster -f md_0_10.xtc -s md_0_10.tpr -o cluster.xpm -g cluster.log -n index.ndx -cutoff 0.15 -method gromos -cl rep_structures.pdb 
+$ echo 1 | gmx_mpi trjconv -s md_0_10.tpr -f md_0_10.xtc -o largest_cluster.pdb -n index.ndx
 
----
+# Covariance Matrix Calculation
+$ gmx covar -s md_0_10.tpr -f md_0_10_center.xtc -n index.ndx -o eigenvalues.xvg -v eigenvectors.trr -av average.pdb
+
 
 ## Steps
 
@@ -117,7 +121,7 @@ $ gmx hbond -s md_0_10.tpr -f md_0_10.xtc -n index.ndx -num hbonds.xvg
 -Calculate the hydrogen bonds formed during the simulation and output the results in the hbonds.xvg file, which contains the number of hydrogen bonds over time.
 ---
 
-## Pressure Analysis
+## 9. Pressure Analysis
 
 ### Compute Pressure Autocorrelation
 ```bash
