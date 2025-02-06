@@ -10,7 +10,6 @@ The steps in this workflow guide the user through the process of preparing and r
 
 ## Commands:
 
-```bash
 # Protein structure preparation
 
 # Convert PDB to GRO file
@@ -119,21 +118,16 @@ $ gmx covar -s md_0_10.tpr -f md_0_10_center.xtc -n index.ndx -o eigenvalues.xvg
 
 ### 8. Hydrogen Bond Analysis
 -Calculate the hydrogen bonds formed during the simulation and output the results in the hbonds.xvg file, which contains the number of hydrogen bonds over time.
----
 
-## 9. Pressure Analysis
+### 9. Pressure Analysis
 
-### Compute Pressure Autocorrelation
-```bash
+### 10. Compute Pressure Autocorrelation
+
 $ gmx_mpi analyze -f pressuren.xvg -ac
-```
 
 ### Plot Pressure Data Using Gnuplot
-```bash
-gnuplot -e "set terminal png size 800,600; set output 'pressure_with_reference.png'; set title 'Pressure vs Time'; set xlabel 'Time (ps)'; set ylabel 'Pressure (bar)'; set grid; plot 'pressuren.xvg' using 1:2 with lines title 'Pressure' linecolor rgb 'purple', 'pressuren.xvg' using 1:2 smooth sbezier with lines title '10-ps Running Avg' linecolor rgb 'red';"
-```
 
----
+gnuplot -e "set terminal png size 800,600; set output 'pressure_with_reference.png'; set title 'Pressure vs Time'; set xlabel 'Time (ps)'; set ylabel 'Pressure (bar)'; set grid; plot 'pressuren.xvg' using 1:2 with lines title 'Pressure' linecolor rgb 'purple', 'pressuren.xvg' using 1:2 smooth sbezier with lines title '10-ps Running Avg' linecolor rgb 'red';"
 
 ## Key Commands Used:
 - **`gmx pdb2gmx`**: Converts PDB to GRO for GROMACS compatibility.
@@ -145,8 +139,6 @@ gnuplot -e "set terminal png size 800,600; set output 'pressure_with_reference.p
 - **`gmx trjconv`**: Processes the trajectory for analysis.
 - **`gmx rms`, `gmx distance`, `gmx energy`**: Perform analysis on the simulation data.
 
----
-
 ## File Descriptions:
 - **`protein_clean.pdb`**: Cleaned protein structure.
 - **`ligand.mol2`**: Ligand in MOL2 format.
@@ -155,13 +147,12 @@ gnuplot -e "set terminal png size 800,600; set output 'pressure_with_reference.p
 - **`em.mdp`, `nvt.mdp`, `npt.mdp`**: Parameter files for energy minimization, NVT, and NPT simulations.
 - **`md.mdp`**: Parameter file for the production MD run.
 
----
-
 ## Interaction Energy Analysis:
 
 After obtaining the `interaction_energy.xvg` file from GROMACS, you can use the `xvg.py` Python script for further analysis. The script processes the interaction energy data and computes energy components like Coulombic and Van der Waals interactions over time.
 
 ### Example Command:
+
 ```bash
 $ python xvg.py 
 ```
