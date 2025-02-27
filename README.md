@@ -119,9 +119,7 @@ $ gmx covar -s md_0_10.tpr -f md_0_10_center.xtc -n index.ndx -o eigenvalues.xvg
 ### 8. Hydrogen Bond Analysis
 -Calculate the hydrogen bonds formed during the simulation and output the results in the hbonds.xvg file, which contains the number of hydrogen bonds over time.
 
-### 9. Pressure Analysis
-
-### 10. Compute Pressure Autocorrelation
+### 9. Compute Pressure Autocorrelation
 
 $ gmx_mpi analyze -f pressuren.xvg -ac
 
